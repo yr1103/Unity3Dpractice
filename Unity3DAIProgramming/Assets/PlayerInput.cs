@@ -118,6 +118,24 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Click"",
+                    ""type"": ""Button"",
+                    ""id"": ""1730e64b-80a4-4380-9afd-fcaa6d6b481b"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MousePosition"",
+                    ""type"": ""Value"",
+                    ""id"": ""c36e6357-8c67-4910-869a-3efef70ea080"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -197,6 +215,28 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""Damage"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a259d131-71be-4451-be65-12f98147b32c"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";PC"",
+                    ""action"": ""Click"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d096f724-cd32-474e-8f48-a3e5a0f3c629"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MousePosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -214,6 +254,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
         m_Player_Damage = m_Player.FindAction("Damage", throwIfNotFound: true);
+        m_Player_Click = m_Player.FindAction("Click", throwIfNotFound: true);
+        m_Player_MousePosition = m_Player.FindAction("MousePosition", throwIfNotFound: true);
     }
 
     ~@PlayerInput()
@@ -297,6 +339,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Attack;
     private readonly InputAction m_Player_Damage;
+    private readonly InputAction m_Player_Click;
+    private readonly InputAction m_Player_MousePosition;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -320,6 +364,14 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Damage".
         /// </summary>
         public InputAction @Damage => m_Wrapper.m_Player_Damage;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Click".
+        /// </summary>
+        public InputAction @Click => m_Wrapper.m_Player_Click;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/MousePosition".
+        /// </summary>
+        public InputAction @MousePosition => m_Wrapper.m_Player_MousePosition;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -355,6 +407,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Damage.started += instance.OnDamage;
             @Damage.performed += instance.OnDamage;
             @Damage.canceled += instance.OnDamage;
+            @Click.started += instance.OnClick;
+            @Click.performed += instance.OnClick;
+            @Click.canceled += instance.OnClick;
+            @MousePosition.started += instance.OnMousePosition;
+            @MousePosition.performed += instance.OnMousePosition;
+            @MousePosition.canceled += instance.OnMousePosition;
         }
 
         /// <summary>
@@ -375,6 +433,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Damage.started -= instance.OnDamage;
             @Damage.performed -= instance.OnDamage;
             @Damage.canceled -= instance.OnDamage;
+            @Click.started -= instance.OnClick;
+            @Click.performed -= instance.OnClick;
+            @Click.canceled -= instance.OnClick;
+            @MousePosition.started -= instance.OnMousePosition;
+            @MousePosition.performed -= instance.OnMousePosition;
+            @MousePosition.canceled -= instance.OnMousePosition;
         }
 
         /// <summary>
@@ -449,5 +513,19 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnDamage(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Click" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnClick(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "MousePosition" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnMousePosition(InputAction.CallbackContext context);
     }
 }
