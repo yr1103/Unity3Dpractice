@@ -8,8 +8,9 @@ public class EnemyTableParser : MonoBehaviour
     [SerializeField] private TextAsset _csvFile;
     
     // 파싱 결과 보관
-    private Dictionary<int, EnemyData> _enemyDatas = new();
-
+    // private Dictionary<int, EnemyData> _enemyDatas = new();
+    [SerializeField] private List<EnemyStats> _enemyStatsList = new();
+    
     private void Awake() => LoadTable();
     
     /// <summary>
